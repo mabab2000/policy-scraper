@@ -45,6 +45,7 @@ except Exception:
     PdfReader = None
 
 from starlette.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -627,3 +628,11 @@ async def scrape(body: ScrapeRequest):
             driver.quit()
     
     return JSONResponse({"results": results})
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
